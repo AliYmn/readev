@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Readev</title>
 </head>
-<body class="w-80 p-4 theme-bg-secondary" id="popup-body">
+<body class="w-80 p-4 pb-6 theme-bg-secondary" id="popup-body">
+  <div class="container mx-auto px-2">
   <div class="flex items-center space-x-2 mb-3">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
@@ -25,16 +26,8 @@
         </svg>
         Open in New Tab
       </button>
-      
-      <!-- Extension Enable/Disable Toggle -->
-      <div class="flex items-center justify-between">
-        <span class="text-sm theme-text-primary">Enable Extension</span>
-        <label class="relative inline-flex items-center cursor-pointer">
-          <input type="checkbox" id="extension-toggle" class="sr-only peer" checked>
-          <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary-300 dark:peer-focus:ring-primary-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary-600"></div>
-        </label>
-      </div>
-      
+
+
       <!-- Theme Toggle -->
       <div class="flex items-center justify-between">
         <span class="text-sm theme-text-primary">Dark Theme</span>
@@ -51,11 +44,8 @@
       </div>
     </div>
   </div>
-  
-  <div class="text-xs text-center theme-text-secondary mt-2">
-    <p>Readev v1.0 - Developer News Dashboard</p>
-  </div>
 
+  </div>
   <script src="../js/popup.js"></script>
 </body>
 </html>

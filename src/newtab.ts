@@ -48,23 +48,88 @@ class NewTabController {
     this.loadingOverlay.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
     this.loadingOverlay.innerHTML = `
       <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-lg flex flex-col items-center">
-        <div class="w-12 h-12 border-4 border-primary-600 border-t-transparent rounded-full animate-spin"></div>
-        <p class="mt-2 text-sm theme-text-primary">Loading...</p>
+        <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-600 dark:border-primary-400 mb-3"></div>
+        <p class="text-gray-700 dark:text-gray-300">Loading...</p>
       </div>
     `;
     document.body.appendChild(this.loadingOverlay);
+    this.loadingOverlay.style.display = 'none';
+    
+    // Initialize theme toggle button
     this.themeToggleButton = document.getElementById('theme-toggle') as HTMLButtonElement;
-
-    // Initialize event listeners
-    this.initEventListeners();
-
-    // Initialize theme
-    initTheme();
+    
+    // Check if extension is enabled
+    this.checkExtensionState();
 
     // Show initial loading state
     this.showLoading();
 
     // Load sites and initialize content
+    this.loadSites();
+  }
+
+  /**
+   * Check if extension is enabled
+   */
+  private checkExtensionState(): void {
+    chrome.storage.local.get(['extensionEnabled'], (result) => {
+      const enabled = result.extensionEnabled !== undefined ? result.extensionEnabled : true;
+      
+      if (!enabled) {
+        // Display disabled message
+        this.showDisabledState();
+      } else {
+        // Initialize normally
+        this.initializeExtension();
+      }
+    });
+  }
+
+  /**
+   * Show disabled state
+   */
+  private showDisabledState(): void {
+    // Clear all content
+    this.siteButtons.innerHTML = '';
+    this.moreSitesDropdownContent.innerHTML = '';
+    this.feedContainer.innerHTML = '';
+    
+    // Show disabled message
+    const disabledMessage = document.createElement('div');
+    disabledMessage.className = 'flex flex-col items-center justify-center h-full p-8';
+    disabledMessage.innerHTML = `
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <h2 class="text-xl font-bold theme-text-primary mb-2">Extension Disabled</h2>
+      <p class="text-center theme-text-secondary mb-4">Readev extension is currently disabled. Enable it from the extension popup to view developer news.</p>
+      <button id="enable-extension-btn" class="btn">Enable Extension</button>
+    `;
+    
+    this.feedContainer.appendChild(disabledMessage);
+    
+    // Add event listener to enable button
+    const enableButton = document.getElementById('enable-extension-btn');
+    if (enableButton) {
+      enableButton.addEventListener('click', () => {
+        chrome.storage.local.set({ extensionEnabled: true }, () => {
+          window.location.reload();
+        });
+      });
+    }
+  }
+
+  /**
+   * Initialize the extension
+   */
+  private initializeExtension(): void {
+    // Initialize event listeners
+    this.initEventListeners();
+    
+    // Initialize theme
+    initTheme();
+    
+    // Load sites
     this.loadSites();
   }
 
