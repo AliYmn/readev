@@ -1,5 +1,5 @@
 import './styles.css';
-import { Site, SitesData } from './types';
+import { ContentSource, Site, Feed, isSite, isFeed, ContentData } from './types';
 import { initTheme, toggleTheme } from './theme';
 
 /**
@@ -9,7 +9,9 @@ class PopupController {
   private openNewTabButton: HTMLButtonElement;
   private sitesList: HTMLDivElement;
   private themeToggleButton: HTMLButtonElement;
+  private sources: ContentSource[] = [];
   private sites: Site[] = [];
+  private feeds: Feed[] = [];
 
   constructor() {
     // Initialize DOM elements
@@ -43,31 +45,35 @@ class PopupController {
   }
 
   /**
-   * Load sites from sites.json
+   * Load sources from sources.json
    */
   private async loadSites(): Promise<void> {
     try {
-      const response = await fetch('sites.json');
-      const data: SitesData = await response.json();
-      this.sites = data.sites;
+      const response = await fetch('sources.json');
+      const data: ContentData = await response.json();
+      this.sources = data.sources;
       
-      // Render sites list
+      // Filter sources by type
+      this.sites = this.sources.filter(isSite) as Site[];
+      this.feeds = this.sources.filter(isFeed) as Feed[];
+      
+      // Render sources list
       this.renderSitesList();
     } catch (error) {
-      console.error('Error loading sites:', error);
+      console.error('Error loading sources:', error);
       this.renderError();
     }
   }
 
   /**
-   * Render sites list in the popup
+   * Render sources list in the popup
    */
   private renderSitesList(): void {
     // Clear existing content
     this.sitesList.innerHTML = '';
     
-    // Add sites to list
-    this.sites.forEach(site => {
+    // Add all sources to list
+    this.sources.forEach(source => {
       const siteElement = document.createElement('div');
       siteElement.className = 'flex items-center justify-between p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-md';
       
@@ -75,11 +81,11 @@ class PopupController {
       
       const siteName = document.createElement('div');
       siteName.className = 'font-medium text-sm theme-text-primary';
-      siteName.textContent = site.name;
+      siteName.textContent = source.name;
       
       const siteDescription = document.createElement('div');
       siteDescription.className = 'text-xs theme-text-secondary';
-      siteDescription.textContent = site.description;
+      siteDescription.textContent = source.description;
       
       siteInfo.appendChild(siteName);
       siteInfo.appendChild(siteDescription);
@@ -88,7 +94,11 @@ class PopupController {
       openButton.className = 'text-xs text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300';
       openButton.textContent = 'Open';
       openButton.addEventListener('click', () => {
-        this.openSiteInNewTab(site.url);
+        if (isSite(source)) {
+          this.openSiteInNewTab(source.url);
+        } else if (isFeed(source)) {
+          this.openSiteInNewTab(source.feed_url);
+        }
       });
       
       siteElement.appendChild(siteInfo);

@@ -1,6 +1,7 @@
 import './styles.css';
-import { Site, SitesData } from './types';
+import { ContentSource, Site, Feed, isSite, isFeed, ContentData } from './types';
 import { initTheme, toggleTheme } from './theme';
+import { FeedReader } from './feedReader';
 
 /**
  * NewTab page controller
@@ -13,14 +14,17 @@ class NewTabController {
   private moreSitesDropdownContent: HTMLDivElement;
   private logoContainer: HTMLDivElement;
   private contentFrame: HTMLIFrameElement;
+  private feedContainer: HTMLDivElement;
+  private feedReader: FeedReader;
   private currentSiteName: HTMLSpanElement;
   private siteDescription: HTMLSpanElement;
   private refreshButton: HTMLButtonElement;
   private loadingOverlay: HTMLDivElement;
   private themeToggleButton: HTMLButtonElement;
+  private sources: ContentSource[] = [];
   private sites: Site[] = [];
   private defaultSiteUrl: string = 'https://devurls.com/';
-  private maxVisibleSites: number = 4; // Maximum number of sites to show as buttons
+  private maxVisibleSites: number = 4; // Will be dynamically calculated based on screen width
 
   constructor() {
     // Initialize DOM elements
@@ -33,10 +37,12 @@ class NewTabController {
     this.moreSitesDropdown.appendChild(this.moreSitesDropdownContent);
     this.logoContainer = document.getElementById('logo-container') as HTMLDivElement;
     this.contentFrame = document.getElementById('content-frame') as HTMLIFrameElement;
+    this.feedContainer = document.getElementById('feed-container') as HTMLDivElement;
+    this.feedReader = new FeedReader(this.feedContainer);
     this.currentSiteName = document.getElementById('current-site-name') as HTMLSpanElement;
     this.siteDescription = document.getElementById('site-description') as HTMLSpanElement;
     this.refreshButton = document.getElementById('refresh-btn') as HTMLButtonElement;
-    
+
     // Create loading overlay
     this.loadingOverlay = document.createElement('div');
     this.loadingOverlay.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
@@ -54,10 +60,10 @@ class NewTabController {
 
     // Initialize theme
     initTheme();
-    
+
     // Show initial loading state
     this.showLoading();
-    
+
     // Load sites and initialize content
     this.loadSites();
   }
@@ -75,12 +81,12 @@ class NewTabController {
     this.refreshButton.addEventListener('click', () => {
       this.refreshCurrentSite();
     });
-    
+
     // Add iframe load event listener
     this.contentFrame.addEventListener('load', () => {
       this.hideLoading();
     });
-    
+
     // Theme toggle button click
     this.themeToggleButton.addEventListener('click', () => {
       toggleTheme();
@@ -101,13 +107,22 @@ class NewTabController {
   }
 
   /**
-   * Load sites from sites.json
+   * Load sources from sources.json
    */
   private async loadSites(): Promise<void> {
     try {
-      const response = await fetch('sites.json');
-      const data: SitesData = await response.json();
-      this.sites = data.sites;
+      const response = await fetch('sources.json');
+      const data: ContentData = await response.json();
+      this.sources = data.sources;
+
+      // Calculate max visible sites based on screen width
+      this.calculateMaxVisibleSites();
+
+      // Add window resize listener to recalculate visible sites
+      window.addEventListener('resize', () => {
+        this.calculateMaxVisibleSites();
+        this.populateSiteButtons();
+      });
 
       // Populate site buttons and dropdown
       this.populateSiteButtons();
@@ -115,8 +130,26 @@ class NewTabController {
       // Load last selected site or default
       this.loadLastSelectedSite();
     } catch (error) {
-      console.error('Error loading sites:', error);
+      console.error('Error loading sources:', error);
       this.loadSite(this.defaultSiteUrl);
+    }
+  }
+
+  /**
+   * Calculate maximum visible sites based on screen width
+   */
+  private calculateMaxVisibleSites(): void {
+    const screenWidth = window.innerWidth;
+    if (screenWidth < 640) { // Small screens
+      this.maxVisibleSites = 2;
+    } else if (screenWidth < 768) { // Medium screens
+      this.maxVisibleSites = 4;
+    } else if (screenWidth < 1024) { // Large screens
+      this.maxVisibleSites = 5;
+    } else if (screenWidth < 1280) { // XL screens
+      this.maxVisibleSites = 6;
+    } else { // 2XL screens and above
+      this.maxVisibleSites = 8;
     }
   }
 
@@ -128,30 +161,40 @@ class NewTabController {
     this.siteButtons.innerHTML = '';
     this.moreSitesDropdownContent.innerHTML = '';
 
-    // Add sites as buttons or dropdown items
-    this.sites.forEach((site, index) => {
+    // Add all sources as buttons or dropdown items
+    this.sources.forEach((source, index) => {
       if (index < this.maxVisibleSites) {
-        // Create button for visible sites
+        // Create button for visible sources
         const button = document.createElement('button');
         button.className = 'site-button px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center';
-        button.dataset.url = site.url;
 
-        // Add site icon (placeholder)
+        // Set URL based on source type
+        if (isSite(source)) {
+          button.dataset.url = source.url;
+        } else if (isFeed(source)) {
+          button.dataset.url = source.feed_url;
+        }
+
+        // Add source icon (placeholder)
         const icon = document.createElement('span');
         icon.className = 'w-5 h-5 mr-2 flex items-center justify-center text-primary-600 dark:text-primary-400 font-bold';
-        icon.textContent = site.name.charAt(0).toUpperCase();
+        icon.textContent = source.name.charAt(0).toUpperCase();
 
-        // Add site name
+        // Add source name
         const name = document.createElement('span');
         name.className = 'theme-text-primary';
-        name.textContent = site.name;
+        name.textContent = source.name;
 
         button.appendChild(icon);
         button.appendChild(name);
 
         // Add click event
         button.addEventListener('click', () => {
-          this.loadSite(site.url);
+          if (isSite(source)) {
+            this.loadSite(source.url);
+          } else if (isFeed(source)) {
+            this.loadSite(source.feed_url);
+          }
         });
 
         this.siteButtons.appendChild(button);
@@ -159,16 +202,37 @@ class NewTabController {
         // Show the more sites container
         this.moreSitesContainer.style.display = 'block';
 
-        // Create dropdown item for additional sites
+        // Create dropdown item for additional sources
         const item = document.createElement('a');
-        item.className = 'block px-4 py-2 text-sm theme-text-primary hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer';
-        item.textContent = site.name;
-        item.dataset.url = site.url;
+        item.className = 'block px-4 py-2 text-sm theme-text-primary hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer flex items-center';
+        
+        // Add source icon (placeholder)
+        const icon = document.createElement('span');
+        icon.className = 'w-5 h-5 mr-2 flex items-center justify-center text-primary-600 dark:text-primary-400 font-bold';
+        icon.textContent = source.name.charAt(0).toUpperCase();
+        
+        // Add source name
+        const name = document.createElement('span');
+        name.textContent = source.name;
+        
+        item.appendChild(icon);
+        item.appendChild(name);
+
+        // Set URL based on source type
+        if (isSite(source)) {
+          item.dataset.url = source.url;
+        } else if (isFeed(source)) {
+          item.dataset.url = source.feed_url;
+        }
 
         // Add click event
         item.addEventListener('click', (e) => {
           e.preventDefault();
-          this.loadSite(site.url);
+          if (isSite(source)) {
+            this.loadSite(source.url);
+          } else if (isFeed(source)) {
+            this.loadSite(source.feed_url);
+          }
           this.moreSitesDropdown.classList.add('hidden');
         });
 
@@ -202,34 +266,61 @@ class NewTabController {
   }
 
   /**
-   * Load a site in the iframe
+   * Load a content source (site or feed)
    */
   private loadSite(url: string): void {
     // Show loading overlay
     this.showLoading();
-    
-    // Update iframe source
-    this.contentFrame.src = url;
 
-    // Save selected site to storage
-    chrome.storage.local.set({ lastSelectedSite: url });
+    // Find if this is a site or feed URL
+    const source = this.sources.find(s =>
+      (isSite(s) && s.url === url) ||
+      (isFeed(s) && s.feed_url === url)
+    );
 
-    // Update UI
+    // Handle based on source type
+    if (source && isFeed(source)) {
+      // For feeds, show feed container and hide iframe
+      this.contentFrame.classList.add('hidden');
+      this.feedContainer.classList.remove('hidden');
+      
+      // Load feed content
+      this.feedReader.loadFeed(url);
+      
+      // Hide loading when feed reader is done
+      setTimeout(() => this.hideLoading(), 500);
+    } else {
+      // For sites, show iframe and hide feed container
+      this.contentFrame.classList.remove('hidden');
+      this.feedContainer.classList.add('hidden');
+      
+      // Update iframe source
+      this.contentFrame.src = url;
+    }
+
+    // Update site info
     this.updateSiteInfo(url);
+    
+    // Save last selected site
+    chrome.storage.local.set({ lastSelectedSite: url });
   }
 
   /**
    * Update site info in the UI
    */
   private updateSiteInfo(url: string): void {
-    const site = this.sites.find(site => site.url === url);
+    // Find the source by URL (could be site or feed)
+    const source = this.sources.find(s =>
+      (isSite(s) && s.url === url) ||
+      (isFeed(s) && s.feed_url === url)
+    );
 
-    if (site) {
-      this.currentSiteName.textContent = site.name;
-      this.siteDescription.textContent = site.description;
+    if (source) {
+      this.currentSiteName.textContent = source.name;
+      this.siteDescription.textContent = source.description;
     } else {
-      this.currentSiteName.textContent = 'Unknown Site';
-      this.siteDescription.textContent = '';
+      this.currentSiteName.textContent = 'External Site';
+      this.siteDescription.textContent = url;
     }
   }
 
