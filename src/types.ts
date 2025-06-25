@@ -5,6 +5,7 @@ export interface ContentSource {
   name: string;
   description: string;
   type: 'site' | 'feed';
+  favorite?: boolean;
 }
 
 /**

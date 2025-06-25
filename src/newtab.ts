@@ -107,13 +107,48 @@ class NewTabController {
   }
 
   /**
-   * Load sources from sources.json
+   * Load favorites from Chrome storage and apply to sources
+   */
+  private async loadFavorites(): Promise<void> {
+    return new Promise((resolve) => {
+      chrome.storage.local.get(['favorites'], (result) => {
+        const favorites = result.favorites || [];
+        console.log('Loaded favorites:', favorites);
+        
+        // Apply favorites to sources
+        this.sources.forEach(source => {
+          source.favorite = favorites.includes(source.name);
+        });
+        
+        resolve();
+      });
+    });
+  }
+  
+  /**
+   * Save favorites to Chrome storage
+   */
+  private saveFavorites(): void {
+    const favorites = this.sources
+      .filter(source => source.favorite)
+      .map(source => source.name);
+    
+    chrome.storage.local.set({ favorites }, () => {
+      console.log('Favorites saved:', favorites);
+    });
+  }
+  
+  /**
+   * Load sources from sources.json and apply favorites
    */
   private async loadSites(): Promise<void> {
     try {
       const response = await fetch('sources.json');
       const data: ContentData = await response.json();
       this.sources = data.sources;
+      
+      // Load favorites from Chrome storage
+      await this.loadFavorites();
 
       // Calculate max visible sites based on screen width
       this.calculateMaxVisibleSites();
@@ -155,15 +190,28 @@ class NewTabController {
 
   /**
    * Populate site buttons and dropdown
+   * Favorites are shown first, then regular sites up to maxVisibleSites
    */
   private populateSiteButtons(): void {
     // Clear existing buttons and dropdown items
     this.siteButtons.innerHTML = '';
     this.moreSitesDropdownContent.innerHTML = '';
+    
+    // Sort sources: favorites first, then regular sites
+    const sortedSources = [...this.sources].sort((a, b) => {
+      if (a.favorite && !b.favorite) return -1;
+      if (!a.favorite && b.favorite) return 1;
+      return 0;
+    });
+    
+    // Track how many buttons we've added
+    let visibleCount = 0;
 
     // Add all sources as buttons or dropdown items
-    this.sources.forEach((source, index) => {
-      if (index < this.maxVisibleSites) {
+    sortedSources.forEach((source) => {
+      // Show as button if it's a favorite or we haven't reached max visible sites
+      if (source.favorite || visibleCount < this.maxVisibleSites) {
+        visibleCount++;
         // Create button for visible sources
         const button = document.createElement('button');
         button.className = 'site-button px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center';
@@ -185,8 +233,34 @@ class NewTabController {
         name.className = 'theme-text-primary';
         name.textContent = source.name;
 
+        // Create container for name and favorite icon
+        const nameContainer = document.createElement('div');
+        nameContainer.className = 'flex items-center justify-between flex-grow';
+        
+        // Add name to container
+        nameContainer.appendChild(name);
+        
+        // Add favorite star icon
+        const favoriteIcon = document.createElement('span');
+        favoriteIcon.className = `ml-2 ${source.favorite ? 'text-yellow-400' : 'text-gray-300'} cursor-pointer hover:text-yellow-400 transition-colors`;
+        favoriteIcon.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+        `;
+        
+        // Add favorite toggle functionality
+        favoriteIcon.addEventListener('click', (e) => {
+          e.stopPropagation(); // Prevent button click
+          source.favorite = !source.favorite;
+          this.saveFavorites();
+          this.populateSiteButtons();
+        });
+        
+        nameContainer.appendChild(favoriteIcon);
+        
         button.appendChild(icon);
-        button.appendChild(name);
+        button.appendChild(nameContainer);
 
         // Add click event
         button.addEventListener('click', () => {
@@ -213,10 +287,35 @@ class NewTabController {
         
         // Add source name
         const name = document.createElement('span');
+        name.className = source.favorite ? 'font-medium text-primary-600 dark:text-primary-400' : '';
         name.textContent = source.name;
         
+        // Create container for name and favorite icon
+        const nameContainer = document.createElement('div');
+        nameContainer.className = 'flex items-center justify-between flex-grow';
+        nameContainer.appendChild(name);
+        
+        // Add favorite star icon
+        const favoriteIcon = document.createElement('span');
+        favoriteIcon.className = `ml-2 ${source.favorite ? 'text-yellow-400' : 'text-gray-300'} cursor-pointer hover:text-yellow-400 transition-colors`;
+        favoriteIcon.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+        `;
+        
+        // Add favorite toggle functionality
+        favoriteIcon.addEventListener('click', (e) => {
+          e.stopPropagation(); // Prevent item click
+          source.favorite = !source.favorite;
+          this.saveFavorites();
+          this.populateSiteButtons();
+        });
+        
+        nameContainer.appendChild(favoriteIcon);
+        
         item.appendChild(icon);
-        item.appendChild(name);
+        item.appendChild(nameContainer);
 
         // Set URL based on source type
         if (isSite(source)) {

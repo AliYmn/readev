@@ -365,12 +365,12 @@ export class FeedReader {
 
     // Create feed title with site name
     const feedTitle = this.feedInfo.title
-      ? `Latest Articles - ${this.feedInfo.title}`
+      ? `${this.feedInfo.title}`
       : 'Latest Articles';
 
     // Create feed header with site info
     const feedLink = this.feedInfo.link ? `<a href="${this.feedInfo.link}" target="_blank" class="text-primary-600 dark:text-primary-400 hover:underline ml-2 text-sm">Visit Site</a>` : '';
-    
+
     feedContainer.innerHTML = `
       <div class="mb-8 pb-4 border-b theme-border">
         <div class="flex items-center justify-between">
