@@ -22,7 +22,6 @@ class NewTabController {
   private loadingOverlay: HTMLDivElement;
   private themeToggleButton: HTMLButtonElement;
   private sources: ContentSource[] = [];
-  private sites: Site[] = [];
   private defaultSiteUrl: string = 'https://devurls.com/';
   private maxVisibleSites: number = 4; // Will be dynamically calculated based on screen width
 
@@ -54,12 +53,12 @@ class NewTabController {
     `;
     document.body.appendChild(this.loadingOverlay);
     this.loadingOverlay.style.display = 'none';
-    
+
     // Initialize theme toggle button
     this.themeToggleButton = document.getElementById('theme-toggle') as HTMLButtonElement;
-    
-    // Check if extension is enabled
-    this.checkExtensionState();
+
+    // Initialize extension
+    this.initializeExtension();
 
     // Show initial loading state
     this.showLoading();
@@ -68,56 +67,7 @@ class NewTabController {
     this.loadSites();
   }
 
-  /**
-   * Check if extension is enabled
-   */
-  private checkExtensionState(): void {
-    chrome.storage.local.get(['extensionEnabled'], (result) => {
-      const enabled = result.extensionEnabled !== undefined ? result.extensionEnabled : true;
-      
-      if (!enabled) {
-        // Display disabled message
-        this.showDisabledState();
-      } else {
-        // Initialize normally
-        this.initializeExtension();
-      }
-    });
-  }
-
-  /**
-   * Show disabled state
-   */
-  private showDisabledState(): void {
-    // Clear all content
-    this.siteButtons.innerHTML = '';
-    this.moreSitesDropdownContent.innerHTML = '';
-    this.feedContainer.innerHTML = '';
-    
-    // Show disabled message
-    const disabledMessage = document.createElement('div');
-    disabledMessage.className = 'flex flex-col items-center justify-center h-full p-8';
-    disabledMessage.innerHTML = `
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-      <h2 class="text-xl font-bold theme-text-primary mb-2">Extension Disabled</h2>
-      <p class="text-center theme-text-secondary mb-4">Readev extension is currently disabled. Enable it from the extension popup to view developer news.</p>
-      <button id="enable-extension-btn" class="btn">Enable Extension</button>
-    `;
-    
-    this.feedContainer.appendChild(disabledMessage);
-    
-    // Add event listener to enable button
-    const enableButton = document.getElementById('enable-extension-btn');
-    if (enableButton) {
-      enableButton.addEventListener('click', () => {
-        chrome.storage.local.set({ extensionEnabled: true }, () => {
-          window.location.reload();
-        });
-      });
-    }
-  }
+  // Extension is always enabled now
 
   /**
    * Initialize the extension
@@ -125,10 +75,10 @@ class NewTabController {
   private initializeExtension(): void {
     // Initialize event listeners
     this.initEventListeners();
-    
+
     // Initialize theme
     initTheme();
-    
+
     // Load sites
     this.loadSites();
   }
