@@ -3,12 +3,17 @@
     {
       "name": "Devurls",
       "url": "https://devurls.com/",
-      "description": "A curated list of developer news from various sources"
+      "description": "Daily developer news and articles"
     },
     {
       "name": "TrendShift",
       "url": "https://trendshift.io/",
-      "description": "Discover trending repositories across GitHub"
+      "description": "Trending repositories and projects on GitHub"
+    },
+    {
+      "name": "Lobste.rs",
+      "url": "https://lobste.rs/",
+      "description": "Computing-focused community centered around link aggregation and discussion"
     }
   ]
 }

@@ -14,16 +14,6 @@
       "name": "Lobste.rs",
       "url": "https://lobste.rs/",
       "description": "Computing-focused community centered around link aggregation and discussion"
-    },
-    {
-      "name": "Dev.to",
-      "url": "https://dev.to/",
-      "description": "Community platform for software developers"
-    },
-    {
-      "name": "GitHub Trending",
-      "url": "https://github.com/trending",
-      "description": "Trending projects on GitHub"
     }
   ]
 }
