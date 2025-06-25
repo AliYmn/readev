@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Readev.news",
+  "name": "Readev",
   "version": "1.0.0",
   "description": "A newspaper for developers — every time you open a new tab.",
   "action": {
