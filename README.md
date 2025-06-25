@@ -1,10 +1,8 @@
 <div align="center">
 
-# Readev
+<img src="images/logo.png" alt="Readev Logo" >
 
-<img src="images/logo.png" alt="Readev Logo" width="120" height="120">
-
-A modern Chrome extension that transforms your new tab into a developer news aggregator.
+<b>Readev</b> is a modern Chrome extension that transforms your new tab into a developer news aggregator.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Chrome Web Store](https://img.shields.io/badge/Chrome-Extension-green.svg)](https://chrome.google.com/webstore)
@@ -51,7 +49,7 @@ Readev is an open-source Chrome extension designed for developers who want to st
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/readev.git
+git clone https://github.com/AliYmn/readev
 cd readev
 
 # Install dependencies

@@ -1,5 +1,4 @@
 import './styles.css';
-import { ContentSource, Site, Feed, isSite, isFeed, ContentData } from './types';
 import { initTheme, toggleTheme } from './theme';
 
 /**
