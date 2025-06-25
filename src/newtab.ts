@@ -32,7 +32,7 @@ class NewTabController {
     this.moreSitesButton = document.getElementById('more-sites-btn') as HTMLButtonElement;
     this.moreSitesDropdown = document.getElementById('more-sites-dropdown') as HTMLDivElement;
     this.moreSitesDropdownContent = document.createElement('div');
-    this.moreSitesDropdownContent.className = 'py-1 theme-bg-primary theme-text-primary shadow-lg rounded-md border theme-border';
+    this.moreSitesDropdownContent.className = 'py-1 theme-bg-primary theme-text-primary shadow-lg rounded-md border theme-border max-h-80 overflow-y-auto';
     this.moreSitesDropdown.appendChild(this.moreSitesDropdownContent);
     this.logoContainer = document.getElementById('logo-container') as HTMLDivElement;
     this.contentFrame = document.getElementById('content-frame') as HTMLIFrameElement;
