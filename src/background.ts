@@ -2,18 +2,9 @@
  * Background script for Readev extension
  */
 
-// Extension state
-let extensionEnabled = true;
-
 // Listen for installation
 chrome.runtime.onInstalled.addListener((details) => {
   console.log('Readev extension installed');
-
-  // Initialize extension state
-  chrome.storage.local.get(['extensionEnabled'], (result) => {
-    extensionEnabled = result.extensionEnabled !== undefined ? result.extensionEnabled : true;
-    updateExtensionIcon(extensionEnabled);
-  });
 
   // Open default site when extension is installed
   if (details.reason === 'install') {
@@ -24,22 +15,7 @@ chrome.runtime.onInstalled.addListener((details) => {
   }
 });
 
-// Listen for tab creation to handle new tab override
-chrome.tabs.onCreated.addListener((tab) => {
-  // Check if this is a new tab page and extension is disabled
-  if (!extensionEnabled && tab.id && tab.pendingUrl?.includes('newtab.html')) {
-    // If extension is disabled, we'll close this tab and open a blank one
-    // This is a workaround since we can't directly navigate to chrome://newtab/
-    setTimeout(() => {
-      try {
-        chrome.tabs.remove(tab.id!);
-        chrome.tabs.create({ url: 'about:blank' });
-      } catch (error) {
-        console.error('Error redirecting tab:', error);
-      }
-    }, 100);
-  }
-});
+// No tab creation override needed anymore
 
 // Listen for messages from content scripts
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
