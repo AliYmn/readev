@@ -80,9 +80,23 @@
         {
             "name": "DZone",
             "feed_url": "https://feeds.dzone.com/home",
-            "description": "Content for software engineers on Java, DevOps, .NET, and more",
+            "description": "Articles on agile, AI, cloud, DevOps, Java, and web development",
             "type": "feed",
             "emoji": "📚"
+        },
+        {
+            "name": "A List Apart",
+            "feed_url": "https://alistapart.com/main/feed/",
+            "description": "Web design, development, standards, and best practices",
+            "type": "feed",
+            "emoji": "🎨"
+        },
+        {
+            "name": "Smashing Magazine",
+            "feed_url": "https://smashingmagazine.com/feed",
+            "description": "CSS, JavaScript, front-end, accessibility, and UX design",
+            "type": "feed",
+            "emoji": "💻"
         }
     ]
 }

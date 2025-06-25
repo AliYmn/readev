@@ -7,46 +7,69 @@
 </head>
 <body class="w-80 p-4 pb-10 theme-bg-secondary" id="popup-body">
   <div class="container mx-auto px-2">
-  <div class="flex items-center space-x-2 mb-3">
-    <img src="../images/icon128.png" class="h-6 w-6" alt="Readev Icon">
-    <h1 class="text-lg font-bold theme-text-primary">Readev</h1>
-  </div>
+    <!-- Header with Logo -->
+    <div class="flex items-center space-x-3 mb-4">
+      <img src="../images/icon128.png" class="h-7 w-7 rounded-md shadow-sm" alt="Readev Icon">
+      <h1 class="text-xl font-bold theme-text-primary tracking-tight">Readev</h1>
+    </div>
 
-  <div class="card mb-4">
-    <p class="text-xs theme-text-secondary mb-3">
-      Your developer news dashboard for the latest tech updates, tutorials, and community discussions.
-    </p>
+    <!-- Main Card -->
+    <div class="card mb-5 shadow-lg border-l-4 border-l-primary-500">
+      <p class="text-xs theme-text-secondary mb-4 leading-relaxed">
+        Your developer news dashboard for the latest tech updates, tutorials, and community discussions.
+      </p>
 
-    <div class="flex flex-col space-y-5">
-      <button id="open-newtab" class="btn flex items-center justify-center hover:bg-primary-700 transition-colors">
-        <img src="../images/icon128.png" class="h-4 w-4 mr-2" alt="Open Icon">
-        Open in New Tab
-      </button>
-
-
-      <!-- Theme Toggle -->
-      <div class="flex items-center justify-between">
-        <span class="text-sm theme-text-primary">Dark Theme</span>
-        <button id="theme-toggle" class="theme-toggle flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
-          <!-- Sun icon for dark mode -->
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 dark-icon hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+      <div class="flex flex-col space-y-5">
+        <!-- Open in New Tab Button -->
+        <button id="open-newtab"
+          class="btn flex items-center justify-center hover:bg-primary-700 transition-colors duration-300 transform hover:scale-[1.02] shadow-md">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
           </svg>
-          <!-- Moon icon for light mode -->
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 light-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-          </svg>
+          Open in New Tab
         </button>
+
+        <!-- Theme Toggle with improved styling -->
+        <div class="flex items-center justify-between mt-2">
+          <span class="text-sm font-medium theme-text-primary">Dark Theme</span>
+          <button id="theme-toggle"
+            class="theme-toggle flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300 shadow-sm">
+            <!-- Sun icon for dark mode -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 dark-icon hidden" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <!-- Moon icon for light mode -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 light-icon" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+            </button>
+        </div>
       </div>
     </div>
   </div>
 
-  </div>
+  <!-- Open Source Banner with improved styling -->
   <div
-    class="mt-4 p-3 bg-gray-100 dark:bg-gray-800 rounded-md text-xs text-center text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700 hover:border-primary-500 dark:hover:border-primary-500 transition-colors">
-    <span class="font-medium text-primary-600 dark:text-primary-400">🧡 Open Source</span>
-    <p class="mt-1">Built by and for developers who love the web, open knowledge, and clean design.</p>
+    class="mt-4 p-4 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-lg text-xs text-center text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:border-primary-500 dark:hover:border-primary-500 transition-all duration-300 shadow-sm">
+    <div class="flex items-center justify-center mb-1">
+      <span class="font-semibold text-primary-600 dark:text-primary-400 flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </path>
+        </svg>
+        Open Source
+      </span>
+    </div>
+    <p class="mt-1 leading-relaxed">Built by and for developers who love the web, open knowledge, and clean design.</p>
   </div>
+
   <div class="h-6"></div>
   <script src="../js/popup.js"></script>
 </body>

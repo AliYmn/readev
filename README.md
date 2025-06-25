@@ -40,6 +40,7 @@ It aggregates content from top developer-centric sources and displays them in a 
 - [TrendShift](https://trendshift.io) 📈
 - [TuxURLs](https://tuxurls.com) 🐧
 - [DZone](https://dzone.com) 📚
+- and more...
 
 🎨 Clean, responsive interface with dark/light mode support
 🔒 No tracking, ads, or logins — just dev content via secure iframes
