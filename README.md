@@ -1,7 +1,7 @@
 
 <div align="center">
 
-<img src="images/logo.png" alt="Readev Logo" />
+<img src="images/logo.png" alt="Readev Logo" width="160" />
 
 # Readev
 
@@ -53,6 +53,45 @@ It aggregates content from top developer-centric sources and displays them in a 
 > No distractions. No noise. Just the dev news that matters.
 
 Readev is your silent companion for staying informed, learning, and exploring new tools — without leaving the browser.
+
+---
+
+## 🤝 How to Contribute
+
+Want to add your favorite developer news source to Readev? Contributions are welcome and encouraged!
+
+### 🔗 Add a New Source
+
+1. Open a pull request (PR) editing the following file:
+   👉 [`sources.json`](https://github.com/AliYmn/readev/blob/main/src/sources.json)
+
+2. Add your new source using the following structure:
+
+```json
+{
+  "name": "Example Source",
+  "url": "https://example.com",
+  "description": "Short description of what this site offers",
+  "type": "site",
+  "emoji": "🧠"
+}
+```
+
+- Use `"type": "site"` for iframe-compatible sites.
+- Use `"type": "feed"` and `feed_url` if the site does **not** allow iframe embedding but provides an RSS or Atom feed.
+
+### ⚠️ Iframe Compatibility
+
+- Make sure the site allows embedding in an iframe (no restrictive `X-Frame-Options` or `Content-Security-Policy` headers).
+- If the site **does not support iframe**, you can still include it using a valid RSS/Atom feed.
+
+### 🚀 Tips
+
+- Choose trusted, high-quality developer content sources.
+- Add a clear, concise description.
+- Use a relevant emoji to improve visual clarity.
+
+Once your PR is reviewed and merged, the source will appear in the next release of Readev.
 
 ---
 
