@@ -1,7 +1,7 @@
 
 <div align="center">
 
-<img src="images/logo.png" alt="Readev Logo" width="160" />
+<img src="images/logo.png" alt="Readev Logo" />
 
 # Readev
 

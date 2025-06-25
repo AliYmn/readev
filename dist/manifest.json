@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Readev.news",
   "version": "1.0.0",
-  "description": "Developer news aggregator for Devurls and TrendShift",
+  "description": "A newspaper for developers — every time you open a new tab.",
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -22,6 +22,5 @@
   },
   "chrome_url_overrides": {
     "newtab": "newtab.html"
-  },
-  "homepage_url": "https://devurls.com/"
+  }
 }
