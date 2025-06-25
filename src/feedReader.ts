@@ -1,6 +1,7 @@
 /**
  * Feed Reader module for displaying RSS feeds in a modern UI
  */
+import { Feed, Site, isFeed, isSite } from './types';
 
 export interface FeedItem {
   title: string;
@@ -19,10 +20,9 @@ export interface FeedInfo {
 export class FeedReader {
   private container: HTMLElement;
   private feedUrl: string;
-  private isLoading: boolean = false;
-  private errorState: boolean = false;
   private feedItems: FeedItem[] = [];
   private feedInfo: FeedInfo = { title: '' };
+  private sourceInfo: Feed | null = null;
   private maxDisplayItems: number = 20; // Increased from default 10
 
   constructor(container: HTMLElement) {
@@ -32,11 +32,12 @@ export class FeedReader {
 
   /**
    * Load and display a feed
+   * @param feedUrl URL of the feed to load
+   * @param sourceInfo Optional source information from sources.json
    */
-  public async loadFeed(feedUrl: string): Promise<void> {
+  public async loadFeed(feedUrl: string, sourceInfo?: Feed): Promise<void> {
     this.feedUrl = feedUrl;
-    this.isLoading = true;
-    this.errorState = false;
+    this.sourceInfo = sourceInfo || null;
     this.renderLoadingState();
 
     try {
@@ -94,12 +95,9 @@ export class FeedReader {
 
       // Parse and render the feed
       this.parseFeed(feedText);
-      this.isLoading = false;
       this.renderFeed();
     } catch (error) {
       console.error('Error loading feed:', error);
-      this.isLoading = false;
-      this.errorState = true;
       this.renderErrorState();
     }
   }
@@ -331,6 +329,9 @@ export class FeedReader {
           dateHtml = `<span class="text-xs theme-text-secondary">${item.pubDate}</span>`;
         }
       }
+      else {
+        dateHtml = `<span class="text-xs theme-text-secondary">${'This week'}</span>`;
+      }
 
       // Author info if available
       const authorHtml = item.author
@@ -364,20 +365,46 @@ export class FeedReader {
     }).join('');
 
     // Create feed title with site name
-    const feedTitle = this.feedInfo.title
-      ? `${this.feedInfo.title}`
-      : 'Latest Articles';
+    let feedTitle = 'Latest Articles';
+
+    // Use source name from JSON if available
+    if (this.sourceInfo && this.sourceInfo.name) {
+      feedTitle = this.sourceInfo.name;
+    }
+    // Fallback to feed title from RSS/Atom
+    else if (this.feedInfo.title) {
+      feedTitle = this.feedInfo.title;
+    }
+
+    // Get link from source or feed info
+    let siteLink = '';
+    if (this.sourceInfo) {
+      if (isFeed(this.sourceInfo)) {
+        siteLink = this.sourceInfo.feed_url;
+      } else if (isSite(this.sourceInfo)) {
+        siteLink = (this.sourceInfo as Site).url;
+      }
+    }
+    // Fallback to feed link
+    if (!siteLink && this.feedInfo.link) {
+      siteLink = this.feedInfo.link;
+    }
 
     // Create feed header with site info
     const feedLink = this.feedInfo.link ? `<a href="${this.feedInfo.link}" target="_blank" class="text-primary-600 dark:text-primary-400 hover:underline ml-2 text-sm">Visit Site</a>` : '';
 
+    // Get description from source info if available, otherwise use feed description
+    const feedDescription = (this.sourceInfo && this.sourceInfo.description) || this.feedInfo.description || '';
+
     feedContainer.innerHTML = `
       <div class="mb-8 pb-4 border-b theme-border">
         <div class="flex items-center justify-between">
-          <h2 class="text-2xl font-bold theme-text-primary">${feedTitle}</h2>
+          <h2 class="text-2xl font-bold theme-text-primary">
+            ${siteLink ? `<a href="${siteLink}" target="_blank" class="hover:underline">${feedTitle}</a>` : feedTitle}
+          </h2>
           ${feedLink}
         </div>
-        ${this.feedInfo.description ? `<p class="theme-text-secondary mt-2 text-sm">${this.feedInfo.description}</p>` : ''}
+        ${feedDescription ? `<p class="theme-text-secondary mt-2 text-sm">${feedDescription}</p>` : ''}
       </div>
       <div class="feed-items">
         ${feedItemsHtml}

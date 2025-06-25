@@ -6,6 +6,7 @@ export interface ContentSource {
   description: string;
   type: 'site' | 'feed';
   favorite?: boolean;
+  emoji?: string;
 }
 
 /**

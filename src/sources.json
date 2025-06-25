@@ -4,73 +4,85 @@
             "name": "Devurls",
             "url": "https://devurls.com/",
             "description": "Daily developer news and articles",
-            "type": "site"
+            "type": "site",
+            "emoji": "📰"
         },
         {
             "name": "TrendShift",
             "url": "https://trendshift.io/",
             "description": "Trending repositories and projects on GitHub",
-            "type": "site"
+            "type": "site",
+            "emoji": "📈"
         },
         {
             "name": "TechURLs",
             "url": "https://techurls.com/",
             "description": "Curated list of top tech news headlines from around the web",
-            "type": "site"
+            "type": "site",
+            "emoji": "🔌"
         },
         {
             "name": "TuxURLs",
             "url": "https://tuxurls.com/",
             "description": "Linux-focused news aggregator for open source enthusiasts",
-            "type": "site"
+            "type": "site",
+            "emoji": "🐧"
         },
         {
             "name": "Lobste.rs",
             "url": "https://lobste.rs/",
             "description": "Computing-focused community centered around link aggregation and discussion",
-            "type": "site"
+            "type": "site",
+            "emoji": "🦞"
         },
         {
             "name": "Dev.to",
             "feed_url": "https://dev.to/feed",
             "description": "Developer-written articles, tutorials, and community stories",
-            "type": "feed"
+            "type": "feed",
+            "emoji": "👩‍💻"
         },
         {
             "name": "Reddit - r/programming",
             "feed_url": "https://www.reddit.com/r/programming/.rss",
             "description": "User-submitted programming news and discussions",
-            "type": "feed"
+            "type": "feed",
+            "emoji": "🤖"
         },
         {
             "name": "freeCodeCamp",
             "feed_url": "https://www.freecodecamp.org/news/rss/",
             "description": "Articles on coding, developer careers, and learning resources",
-            "type": "feed"
+            "type": "feed",
+            "emoji": "🔥"
         },
         {
             "name": "Hackernoon",
             "feed_url": "https://hackernoon.com/feed",
             "description": "Technology, software development, and blockchain stories",
-            "type": "feed"
+            "type": "feed",
+            "emoji": "🚀"
         },
         {
-            "name": "Google Developers Blog",
+            "name": "Google Developers",
             "feed_url": "https://developers.googleblog.com/atom.xml",
             "description": "Official Google news for developers and new tools",
-            "type": "feed"
+            "type": "feed",
+            "emoji": "🧩"
         },
         {
-            "name": "Stack Overflow Blog",
+            "name": "Stack Overflow",
             "feed_url": "https://stackoverflow.blog/feed/",
             "description": "Industry insights, dev culture, and Stack Overflow updates",
-            "type": "feed"
+            "type": "feed",
+            "emoji": "⚡"
         },
         {
             "name": "DZone",
             "feed_url": "https://feeds.dzone.com/home",
             "description": "Content for software engineers on Java, DevOps, .NET, and more",
-            "type": "feed"
+            "type": "feed",
+            "emoji": "📚"
         }
     ]
 }

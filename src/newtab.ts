@@ -114,17 +114,17 @@ class NewTabController {
       chrome.storage.local.get(['favorites'], (result) => {
         const favorites = result.favorites || [];
         console.log('Loaded favorites:', favorites);
-        
+
         // Apply favorites to sources
         this.sources.forEach(source => {
           source.favorite = favorites.includes(source.name);
         });
-        
+
         resolve();
       });
     });
   }
-  
+
   /**
    * Save favorites to Chrome storage
    */
@@ -132,12 +132,12 @@ class NewTabController {
     const favorites = this.sources
       .filter(source => source.favorite)
       .map(source => source.name);
-    
+
     chrome.storage.local.set({ favorites }, () => {
       console.log('Favorites saved:', favorites);
     });
   }
-  
+
   /**
    * Load sources from sources.json and apply favorites
    */
@@ -146,7 +146,7 @@ class NewTabController {
       const response = await fetch('sources.json');
       const data: ContentData = await response.json();
       this.sources = data.sources;
-      
+
       // Load favorites from Chrome storage
       await this.loadFavorites();
 
@@ -176,15 +176,15 @@ class NewTabController {
   private calculateMaxVisibleSites(): void {
     const screenWidth = window.innerWidth;
     if (screenWidth < 640) { // Small screens
-      this.maxVisibleSites = 2;
+      this.maxVisibleSites = 1;
     } else if (screenWidth < 768) { // Medium screens
-      this.maxVisibleSites = 4;
+      this.maxVisibleSites = 2;
     } else if (screenWidth < 1024) { // Large screens
-      this.maxVisibleSites = 5;
+      this.maxVisibleSites = 3;
     } else if (screenWidth < 1280) { // XL screens
-      this.maxVisibleSites = 6;
+      this.maxVisibleSites = 4;
     } else { // 2XL screens and above
-      this.maxVisibleSites = 8;
+      this.maxVisibleSites = 5;
     }
   }
 
@@ -196,14 +196,14 @@ class NewTabController {
     // Clear existing buttons and dropdown items
     this.siteButtons.innerHTML = '';
     this.moreSitesDropdownContent.innerHTML = '';
-    
+
     // Sort sources: favorites first, then regular sites
     const sortedSources = [...this.sources].sort((a, b) => {
       if (a.favorite && !b.favorite) return -1;
       if (!a.favorite && b.favorite) return 1;
       return 0;
     });
-    
+
     // Track how many buttons we've added
     let visibleCount = 0;
 
@@ -223,10 +223,18 @@ class NewTabController {
           button.dataset.url = source.feed_url;
         }
 
-        // Add source icon (placeholder)
+        // Add source emoji icon
         const icon = document.createElement('span');
-        icon.className = 'w-5 h-5 mr-2 flex items-center justify-center text-primary-600 dark:text-primary-400 font-bold';
-        icon.textContent = source.name.charAt(0).toUpperCase();
+        icon.className = 'w-6 h-6 mr-2 flex items-center justify-center';
+
+        // Use emoji if available, otherwise fallback to first letter
+        if (source.emoji) {
+          icon.textContent = source.emoji;
+          icon.className += ' text-lg';
+        } else {
+          icon.textContent = source.name.charAt(0).toUpperCase();
+          icon.className += ' text-primary-600 dark:text-primary-400 font-bold';
+        }
 
         // Add source name
         const name = document.createElement('span');
@@ -236,10 +244,10 @@ class NewTabController {
         // Create container for name and favorite icon
         const nameContainer = document.createElement('div');
         nameContainer.className = 'flex items-center justify-between flex-grow';
-        
+
         // Add name to container
         nameContainer.appendChild(name);
-        
+
         // Add favorite star icon
         const favoriteIcon = document.createElement('span');
         favoriteIcon.className = `ml-2 ${source.favorite ? 'text-yellow-400' : 'text-gray-300'} cursor-pointer hover:text-yellow-400 transition-colors`;
@@ -248,7 +256,7 @@ class NewTabController {
             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
           </svg>
         `;
-        
+
         // Add favorite toggle functionality
         favoriteIcon.addEventListener('click', (e) => {
           e.stopPropagation(); // Prevent button click
@@ -256,9 +264,9 @@ class NewTabController {
           this.saveFavorites();
           this.populateSiteButtons();
         });
-        
+
         nameContainer.appendChild(favoriteIcon);
-        
+
         button.appendChild(icon);
         button.appendChild(nameContainer);
 
@@ -279,22 +287,30 @@ class NewTabController {
         // Create dropdown item for additional sources
         const item = document.createElement('a');
         item.className = 'block px-4 py-2 text-sm theme-text-primary hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer flex items-center';
-        
-        // Add source icon (placeholder)
+
+        // Add source emoji icon
         const icon = document.createElement('span');
-        icon.className = 'w-5 h-5 mr-2 flex items-center justify-center text-primary-600 dark:text-primary-400 font-bold';
-        icon.textContent = source.name.charAt(0).toUpperCase();
-        
+        icon.className = 'w-6 h-6 mr-2 flex items-center justify-center';
+
+        // Use emoji if available, otherwise fallback to first letter
+        if (source.emoji) {
+          icon.textContent = source.emoji;
+          icon.className += ' text-lg';
+        } else {
+          icon.textContent = source.name.charAt(0).toUpperCase();
+          icon.className += ' text-primary-600 dark:text-primary-400 font-bold';
+        }
+
         // Add source name
         const name = document.createElement('span');
         name.className = source.favorite ? 'font-medium text-primary-600 dark:text-primary-400' : '';
         name.textContent = source.name;
-        
+
         // Create container for name and favorite icon
         const nameContainer = document.createElement('div');
         nameContainer.className = 'flex items-center justify-between flex-grow';
         nameContainer.appendChild(name);
-        
+
         // Add favorite star icon
         const favoriteIcon = document.createElement('span');
         favoriteIcon.className = `ml-2 ${source.favorite ? 'text-yellow-400' : 'text-gray-300'} cursor-pointer hover:text-yellow-400 transition-colors`;
@@ -303,7 +319,7 @@ class NewTabController {
             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
           </svg>
         `;
-        
+
         // Add favorite toggle functionality
         favoriteIcon.addEventListener('click', (e) => {
           e.stopPropagation(); // Prevent item click
@@ -311,9 +327,9 @@ class NewTabController {
           this.saveFavorites();
           this.populateSiteButtons();
         });
-        
+
         nameContainer.appendChild(favoriteIcon);
-        
+
         item.appendChild(icon);
         item.appendChild(nameContainer);
 
@@ -382,24 +398,28 @@ class NewTabController {
       // For feeds, show feed container and hide iframe
       this.contentFrame.classList.add('hidden');
       this.feedContainer.classList.remove('hidden');
-      
-      // Load feed content
-      this.feedReader.loadFeed(url);
-      
+
+      // Update site name and description
+      this.currentSiteName.textContent = source.name;
+      this.siteDescription.textContent = source.description || '';
+
+      // Load feed content with source information
+      this.feedReader.loadFeed(url, source);
+
       // Hide loading when feed reader is done
       setTimeout(() => this.hideLoading(), 500);
     } else {
       // For sites, show iframe and hide feed container
       this.contentFrame.classList.remove('hidden');
       this.feedContainer.classList.add('hidden');
-      
+
       // Update iframe source
       this.contentFrame.src = url;
     }
 
     // Update site info
     this.updateSiteInfo(url);
-    
+
     // Save last selected site
     chrome.storage.local.set({ lastSelectedSite: url });
   }
