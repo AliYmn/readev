@@ -1,0 +1,14 @@
+{
+  "sites": [
+    {
+      "name": "Devurls",
+      "url": "https://devurls.com/",
+      "description": "A curated list of developer news from various sources"
+    },
+    {
+      "name": "TrendShift",
+      "url": "https://trendshift.io/",
+      "description": "Discover trending repositories across GitHub"
+    }
+  ]
+}

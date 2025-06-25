@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* Dark mode variables */
+:root {
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f9fafb;
+  --color-text-primary: #111827;
+  --color-text-secondary: #4b5563;
+  --color-border: #e5e7eb;
+  --color-shadow: rgba(0, 0, 0, 0.1);
+}
+
+.dark {
+  --color-bg-primary: #1f2937;
+  --color-bg-secondary: #111827;
+  --color-text-primary: #f9fafb;
+  --color-text-secondary: #d1d5db;
+  --color-border: #374151;
+  --color-shadow: rgba(0, 0, 0, 0.3);
+}
+
+/* Force text colors in dark mode */
+.dark .theme-text-primary {
+  color: var(--color-text-primary) !important;
+}
+
+.dark .theme-text-secondary {
+  color: var(--color-text-secondary) !important;
+}
+
+/* Apply theme variables */
+.theme-bg-primary {
+  background-color: var(--color-bg-primary);
+}
+
+.theme-bg-secondary {
+  background-color: var(--color-bg-secondary);
+}
+
+.theme-text-primary {
+  color: var(--color-text-primary);
+}
+
+.theme-text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.theme-border {
+  border-color: var(--color-border);
+}
+
+/* Component styles */
+@layer components {
+  .btn {
+    @apply bg-primary-600 text-white py-2 px-4 rounded-md hover:bg-primary-700 transition-colors;
+  }
+
+  .card {
+    @apply rounded-lg shadow-md p-4 border theme-border theme-bg-primary;
+  }
+}
+
+/* Site frame */
+.site-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  @apply p-2 rounded-full transition-colors;
+}
+
+.dark .theme-toggle {
+  @apply text-yellow-300 hover:text-yellow-200;
+}
+
+.light .theme-toggle {
+  @apply text-gray-700 hover:text-gray-900;
+}
+
+.site-frame {
+  @apply w-full h-full border-0;
+}

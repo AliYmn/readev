@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Readev.news",
+  "version": "1.0.0",
+  "description": "Developer news and content aggregator in a single panel",
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/icon16.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    }
+  },
+  "permissions": ["tabs", "storage"],
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+  "homepage_url": "https://devurls.com/"
+}
