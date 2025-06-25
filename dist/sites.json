@@ -11,6 +11,16 @@
       "description": "Trending repositories and projects on GitHub"
     },
     {
+      "name": "TechURLs",
+      "url": "https://techurls.com/",
+      "description": "Curated list of top tech news headlines from around the web"
+    },
+    {
+      "name": "TuxURLs",
+      "url": "https://tuxurls.com/",
+      "description": "Linux-focused news aggregator for open source enthusiasts"
+    },
+    {
       "name": "Lobste.rs",
       "url": "https://lobste.rs/",
       "description": "Computing-focused community centered around link aggregation and discussion"
