@@ -23,6 +23,11 @@
 
 It aggregates content from top developer-centric sources and displays them in a focused, readable format — helping you stay updated with the latest in tech every time you open a new tab.
 
+<div align="center">
+<img src="images/demo.png" alt="Readev Demo Screenshot" width="800" />
+<p><em>Readev in action: Your new tab transformed into a developer news dashboard</em></p>
+</div>
+
 ---
 
 ## 🌐 What It Does
