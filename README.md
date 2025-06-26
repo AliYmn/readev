@@ -96,6 +96,39 @@ Once your PR is reviewed and merged, the source will appear in the next release 
 
 ---
 
+## 🔧 Installation
+
+### Local Installation (Developer Mode)
+
+1. Download the latest release ZIP file (`readev.zip`) from the [releases page](https://github.com/AliYmn/readev/releases) or clone this repository and build it yourself.
+
+2. Open Chrome and navigate to `chrome://extensions/`
+
+3. Enable "Developer mode" by toggling the switch in the top-right corner.
+
+4. Click on "Load unpacked" button.
+
+5. Select the extracted ZIP folder or the `dist` directory if you built it yourself.
+
+6. The Readev extension should now be installed and will replace your new tab page.
+
+### Chrome Web Store Installation
+
+1. Visit the [Readev Chrome Extension page](https://chrome.google.com/webstore/detail/readev/[extension-id]) on the Chrome Web Store.
+
+2. Click the "Add to Chrome" button.
+
+3. Confirm by clicking "Add extension" in the popup.
+
+4. Once installed, open a new tab to start using Readev!
+
+### Updating the Extension
+
+- **Chrome Web Store version**: Updates will be automatically applied when published.
+- **Local installation**: Download the latest release and follow the installation steps again, or pull the latest changes and rebuild if you're using the source code.
+
+---
+
 ## 🧡 Open Source
 
 This project is open-source and MIT licensed.
