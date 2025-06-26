@@ -1,0 +1,263 @@
+{
+    "sources": [
+        {
+            "name": "Devurls",
+            "url": "https://devurls.com/",
+            "description": "Daily developer news and articles",
+            "type": "site",
+            "emoji": "\ud83d\udcf0"
+        },
+        {
+            "name": "TrendShift",
+            "url": "https://trendshift.io/",
+            "description": "Trending repositories and projects on GitHub",
+            "type": "site",
+            "emoji": "\ud83d\udcc8"
+        },
+        {
+            "name": "TechURLs",
+            "url": "https://techurls.com/",
+            "description": "Curated list of top tech news headlines from around the web",
+            "type": "site",
+            "emoji": "\ud83d\udd0c"
+        },
+        {
+            "name": "TuxURLs",
+            "url": "https://tuxurls.com/",
+            "description": "Linux-focused news aggregator for open source enthusiasts",
+            "type": "site",
+            "emoji": "\ud83d\udc27"
+        },
+        {
+            "name": "Lobste.rs",
+            "url": "https://lobste.rs/",
+            "description": "Computing-focused community centered around link aggregation and discussion",
+            "type": "site",
+            "emoji": "\ud83e\udd9e"
+        },
+        {
+            "name": "Dev.to",
+            "feed_url": "https://dev.to/feed",
+            "description": "Developer-written articles, tutorials, and community stories",
+            "type": "feed",
+            "emoji": "\ud83d\udc69\u200d\ud83d\udcbb"
+        },
+        {
+            "name": "Reddit - r/programming",
+            "feed_url": "https://www.reddit.com/r/programming/.rss",
+            "description": "User-submitted programming news and discussions",
+            "type": "feed",
+            "emoji": "\ud83e\udd16"
+        },
+        {
+            "name": "freeCodeCamp",
+            "feed_url": "https://www.freecodecamp.org/news/rss/",
+            "description": "Articles on coding, developer careers, and learning resources",
+            "type": "feed",
+            "emoji": "\ud83d\udd25"
+        },
+        {
+            "name": "Hackernoon",
+            "feed_url": "https://hackernoon.com/feed",
+            "description": "Technology, software development, and blockchain stories",
+            "type": "feed",
+            "emoji": "\ud83d\ude80"
+        },
+        {
+            "name": "Google Developers",
+            "feed_url": "https://developers.googleblog.com/atom.xml",
+            "description": "Official Google news for developers and new tools",
+            "type": "feed",
+            "emoji": "\ud83e\udde9"
+        },
+        {
+            "name": "Stack Overflow",
+            "feed_url": "https://stackoverflow.blog/feed/",
+            "description": "Industry insights, dev culture, and Stack Overflow updates",
+            "type": "feed",
+            "emoji": "\u26a1"
+        },
+        {
+            "name": "DZone",
+            "feed_url": "https://feeds.dzone.com/home",
+            "description": "Articles on agile, AI, cloud, DevOps, Java, and web development",
+            "type": "feed",
+            "emoji": "\ud83d\udcda"
+        },
+        {
+            "name": "A List Apart",
+            "feed_url": "https://alistapart.com/main/feed/",
+            "description": "Web design, development, standards, and best practices",
+            "type": "feed",
+            "emoji": "\ud83c\udfa8"
+        },
+        {
+            "name": "Smashing Magazine",
+            "feed_url": "https://smashingmagazine.com/feed",
+            "description": "CSS, JavaScript, front-end, accessibility, and UX design",
+            "type": "feed",
+            "emoji": "\ud83d\udcbb"
+        },
+        {
+            "name": "Shaaf's Blog",
+            "feed_url": "https://shaaf.dev/rss",
+            "description": "Developer-focused blog",
+            "type": "feed",
+            "emoji": "\ud83d\udcdd"
+        },
+        {
+            "name": "SitePoint Blog",
+            "feed_url": "https://sitepoint.com/feed",
+            "description": "Web development articles",
+            "type": "feed",
+            "emoji": "\ud83c\udf10"
+        },
+        {
+            "name": "Codrops",
+            "feed_url": "https://tympanus.net/codrops/feed",
+            "description": "Creative tutorials & demos",
+            "type": "feed",
+            "emoji": "\u2728"
+        },
+        {
+            "name": "SCAND Blog",
+            "feed_url": "https://scand.com/company/blog/feed",
+            "description": "Software development insights",
+            "type": "feed",
+            "emoji": "\ud83d\udd27"
+        },
+        {
+            "name": "SD Times",
+            "feed_url": "https://sdtimes.com/feed",
+            "description": "Software development industry news",
+            "type": "feed",
+            "emoji": "\ud83d\udcf0"
+        },
+        {
+            "name": "Code Simplicity",
+            "feed_url": "https://codesimplicity.com/feed",
+            "description": "Code quality & simplicity topics",
+            "type": "feed",
+            "emoji": "\ud83d\udd0d"
+        },
+        {
+            "name": "WebAppers",
+            "feed_url": "https://feeds.feedburner.com/webappers",
+            "description": "Web design/development resources",
+            "type": "feed",
+            "emoji": "\ud83c\udf1f"
+        },
+        {
+            "name": "Jon Skeet's Coding Blog",
+            "feed_url": "https://csharpindepth.com/rss",
+            "description": "Deep .NET/C# content",
+            "type": "feed",
+            "emoji": "\ud83e\udde0"
+        },
+        {
+            "name": "Codemotion Magazine",
+            "feed_url": "https://www.codemotion.com/magazine/feed/",
+            "description": "Software engineering content",
+            "type": "feed",
+            "emoji": "\ud83d\udee0\ufe0f"
+        },
+        {
+            "name": "Simple Programmer",
+            "feed_url": "https://simpleprogrammer.com/feed",
+            "description": "Career & dev lifestyle insights",
+            "type": "feed",
+            "emoji": "\ud83c\udfcb\ufe0f"
+        },
+        {
+            "name": "Smashing Hub",
+            "feed_url": "https://smashinghub.com/feed",
+            "description": "Web trends & development",
+            "type": "feed",
+            "emoji": "\ud83c\udf08"
+        },
+        {
+            "name": "Pontikis.net Blog",
+            "feed_url": "https://pontikis.net/feed",
+            "description": "Programming tips and news",
+            "type": "feed",
+            "emoji": "\ud83d\udece\ufe0f"
+        },
+        {
+            "name": "The Daily WTF",
+            "feed_url": "https://thedailywtf.com/rss",
+            "description": "Humorous/weird dev stories",
+            "type": "feed",
+            "emoji": "\ud83e\udd21"
+        },
+        {
+            "name": "DevelopnSolve",
+            "feed_url": "https://developnsolve.com/rss",
+            "description": ".NET tutorials & coding advice",
+            "type": "feed",
+            "emoji": "\ud83e\uddea"
+        },
+        {
+            "name": "Kodersolution Blog",
+            "feed_url": "https://kodersolution.com/feed",
+            "description": "Programming tutorials & guides",
+            "type": "feed",
+            "emoji": "\ud83e\uddf0"
+        },
+        {
+            "name": "AIParabellum Blog",
+            "feed_url": "https://aiparabellum.com/feed",
+            "description": "AI & programming integration",
+            "type": "feed",
+            "emoji": "\ud83e\udd16"
+        },
+        {
+            "name": "Net Solutions Blog",
+            "feed_url": "https://www.netsolutions.com/insights/feed",
+            "description": "Mobile/web development insights",
+            "type": "feed",
+            "emoji": "\ud83d\udcf2"
+        },
+        {
+            "name": "GeeksforGeeks",
+            "feed_url": "https://www.geeksforgeeks.org/feed",
+            "description": "Coding problems & interview prep",
+            "type": "feed",
+            "emoji": "\ud83e\udde9"
+        },
+        {
+            "name": "Coding Horror",
+            "feed_url": "https://blog.codinghorror.com/rss",
+            "description": "Programming culture & humor",
+            "type": "feed",
+            "emoji": "\ud83d\ude0e"
+        },
+        {
+            "name": "Coders Dev Blog",
+            "feed_url": "https://www.coders.dev/blog/feed",
+            "description": "Coding tutorials & articles",
+            "type": "feed",
+            "emoji": "\ud83d\udca1"
+        },
+        {
+            "name": "Quastor Blog",
+            "feed_url": "https://blog.quastor.org/rss",
+            "description": "Software engineering stories",
+            "type": "feed",
+            "emoji": "\ud83e\uddfe"
+        },
+        {
+            "name": "Microsoft Developer Blog",
+            "feed_url": "https://devblogs.microsoft.com/feed",
+            "description": "Official Microsoft dev news",
+            "type": "feed",
+            "emoji": "\ud83e\ude9f"
+        },
+        {
+            "name": "Women Who Code Blog",
+            "feed_url": "https://www.womenwhocode.com/blog/rss",
+            "description": "Inspiring articles for women in tech",
+            "type": "feed",
+            "emoji": "\ud83d\udc69\u200d\ud83d\ude80"
+        }
+    ]
+}

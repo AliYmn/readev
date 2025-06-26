@@ -119,7 +119,7 @@ Once your PR is reviewed and merged, the source will appear in the next release 
 
 ### Chrome Web Store Installation
 
-1. Visit the [Readev Chrome Extension page](https://chrome.google.com/webstore/detail/readev/[extension-id]) on the Chrome Web Store.
+1. Visit the [Readev Chrome Extension page](https://chrome.google.com/webstore/detail/ljkdbnilpgldcmkajaclbnglkgejlbhk) on the Chrome Web Store.
 
 2. Click the "Add to Chrome" button.
 

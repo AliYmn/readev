@@ -22,5 +22,8 @@
   },
   "chrome_url_overrides": {
     "newtab": "newtab.html"
+  },
+  "privacy_policy": {
+    "url": "https://AliYmn.github.io/readev/privacy.html"
   }
 }
