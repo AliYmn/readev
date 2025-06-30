@@ -9,9 +9,10 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 ![Status](https://img.shields.io/badge/status-active-brightgreen)
-[![Chrome Extension](https://img.shields.io/badge/Chrome%20Extension-Coming%20Soon-orange)](https://chromewebstore.google.com/detail/readev/ljkdbnilpgldcmkajaclbnglkgejlbhk?authuser=0&hl=tr
+[![Chrome Extension](https://img.shields.io/badge/Chrome%20Extension-Available%20Now-green)](https://chromewebstore.google.com/detail/readev/ljkdbnilpgldcmkajaclbnglkgejlbhk)
 ![Made with TypeScript](https://img.shields.io/badge/Made%20with-TypeScript-3178c6?logo=typescript&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Styled%20with-TailwindCSS-38b2ac?logo=tailwind-css&logoColor=white)
+
 
 </div>
 
